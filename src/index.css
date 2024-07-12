@@ -85,7 +85,7 @@ body {
   outline: none;
 }
 
-.searchForm label {
+.search label {
   position: absolute;
   left: -99999px;
 }
@@ -200,8 +200,8 @@ body {
   cursor: pointer;
 }
 
-.Missing h2, .PostPage h2, 
-.Missing p, .PostPage p {
+ 
+.Missing p, .PostPage p, .NewPost p {
   margin-bottom: 1rem;
 }
 
@@ -210,11 +210,27 @@ body {
   min-width: 48px;
   border-radius: 0.25rem;
   padding: 0.5rem;
+  margin-right: 0.5rem;
   font-size: 1rem;
-  background-color: red;
-  color: #fff;
+  color: #000;
   cursor: pointer;
 }
+
+.deleteButton {
+  background-color: #ff0000;
+}
+:hover.deleteButton {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.editButton {
+  background-color: #ffee22;
+}
+:hover.editButton {
+  background-color: #000000;
+  color: #ffffff;
+  }
 
 .statusMsg {
   margin-top: 2rem;
