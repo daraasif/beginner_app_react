@@ -8,10 +8,11 @@ import Missing from './Missing'
 import About from './About'
 // import { Route, Routes } from 'react'
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'
 import api from './api/posts'
 import EditPost from './EditPost'
+import useWindowSize from './hooks/useWindowSize'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   const [editTitle, setEditTitle] = useState('')
   const [editBody, setEditBody] = useState('')
   const navigate = useNavigate()
+  const { width } = useWindowSize()
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -118,7 +120,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header title="React Js Beginner" />
+      <Header title="React Js Beginner" width={width} />
       <Nav search={search} setSearch={setSearch} />
       <Routes>
         <Route exact path="/" element={<Home posts={searchResults} />} />
