@@ -13,6 +13,7 @@ import { format } from 'date-fns'
 import api from './api/posts'
 import EditPost from './EditPost'
 import useWindowSize from './hooks/useWindowSize'
+import useAxiosFetch from './hooks/useAxiosFetch'
 
 
 function App() {
@@ -25,26 +26,31 @@ function App() {
   const [editBody, setEditBody] = useState('')
   const navigate = useNavigate()
   const { width } = useWindowSize()
+  const { data, fetchError, isLoading } = useAxiosFetch('http://172.20.0.1:3500/posts')
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.get('/posts');
-        setPosts(response.data);
-      } catch (error) {
-        if (error.response) {
-          console.log('Error Data:', error.response.data);
-          console.log('Error Status:', error.response.status);
-          console.log('Error Headers:', error.response.headers);
-        } else if (error.request) {
-          console.log('Error Request:', error.request);
-        } else {
-          console.log('Error Message:', error.message);
-        }
-      }
-    };
-    fetchPosts();
-  }, []);
+    setPosts(data)
+  }, [data])
+
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       const response = await api.get('/posts');
+  //       setPosts(response.data);
+  //     } catch (error) {
+  //       if (error.response) {
+  //         console.log('Error Data:', error.response.data);
+  //         console.log('Error Status:', error.response.status);
+  //         console.log('Error Headers:', error.response.headers);
+  //       } else if (error.request) {
+  //         console.log('Error Request:', error.request);
+  //       } else {
+  //         console.log('Error Message:', error.message);
+  //       }
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
 
 
   //   useEffect(() => {
@@ -123,7 +129,7 @@ function App() {
       <Header title="React Js Beginner" width={width} />
       <Nav search={search} setSearch={setSearch} />
       <Routes>
-        <Route exact path="/" element={<Home posts={searchResults} />} />
+        <Route exact path="/" element={<Home posts={searchResults} />} fetchError={fetchError} isLoading={isLoading} />
         <Route exact path="/post" element={<NewPost handleSubmit={handleSubmit} postTitle={postTitle} setPostTitle={setPostTitle} postBody={postBody} setPostBody={setPostBody} />} />
         <Route path="/edit/:id" element={<EditPost 
         posts={posts}
